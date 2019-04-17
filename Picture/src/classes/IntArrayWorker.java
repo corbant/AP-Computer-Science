@@ -30,6 +30,50 @@ public class IntArrayWorker
   }
   
   /**
+   * Method to return the amount of time a number is found in the matrix
+   * @param num number to find
+   * @return the number of times num appears in the matrix
+   */
+  public int getCount(int num) {
+	  int count = 0;
+	  for(int[] rowArray : matrix) {
+		  for(int item : rowArray) {
+			  if(item == num)
+				  count++;
+		  }
+	  }
+	  return count;
+  }
+  
+  /**
+   * Method to return the largest number in the matrix
+   * @return the largest number in the matrix
+   */
+  public int getLargest() {
+	  int largest = 0;
+	  for(int[] rowArray : matrix) {
+		  for(int item : rowArray) {
+			  if(item > largest)
+				  largest = item;
+		  }
+	  }
+	  return largest;
+  }
+  
+  /**
+   * Method to return the total of values in a column col
+   * @param col column to use
+   * @return total of values in column
+   */
+  public int getColTotal(int col) {
+	  int total = 0;
+	  for(int i = 0; i < matrix.length; i++) {
+		  total += matrix[i][col];
+	  }
+	  return total;
+  }
+  
+  /**
    * Method to return the total using a nested for-each loop
    * @return the total of the values in the array
    */
