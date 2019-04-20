@@ -328,18 +328,32 @@ public class Picture extends SimplePicture
     }   
   }
   
-  public void copy(Picture fromPic, int startRow, int startCol) {
+  
+  /**
+   * copy from the passed fromPic starting at the
+   *  fromPicStart and fromPicEnd row and column 
+   *  numbers to startCol and startRow in the
+   *  current picture
+   * @param fromPic the picture to copy from
+   * @param fromRowStart the row to start copying from
+   * @param fromRowEnd the row to end copying from
+   * @param fromColStart the column to start copying from
+   * @param fromColEnd the column to end copying from
+   * @param startRow the start row to copy to
+   * @param startCol the start column to copy to
+   */
+  public void copy(Picture fromPic, int fromRowStart, int fromRowEnd, int fromColStart, int fromColEnd, int startRow, int startCol) {
 	  Pixel fromPixel = null;
 	    Pixel toPixel = null;
 	    Pixel[][] toPixels = this.getPixels2D();
 	    Pixel[][] fromPixels = fromPic.getPixels2D();
-	    for (int fromRow = 0, toRow = startRow; 
-	         fromRow < fromPixels.length &&
+	    for (int fromRow = fromRowStart, toRow = startRow; 
+	         fromRow < fromRowEnd &&
 	         toRow < toPixels.length; 
 	         fromRow++, toRow++)
 	    {
-	      for (int fromCol = 0, toCol = startCol; 
-	           fromCol < fromPixels[0].length &&
+	      for (int fromCol = fromColStart, toCol = startCol; 
+	           fromCol < fromColEnd &&
 	           toCol < toPixels[0].length;  
 	           fromCol++, toCol++)
 	      {
@@ -367,6 +381,17 @@ public class Picture extends SimplePicture
     this.write("images/collage.jpg");
   }
   
+  public void myCollage() {
+	  Picture blueMotorcycle = new Picture("images/blueMotorcycle.jpg");
+	  Picture redMotorcycle = new Picture("images/redMotorcycle.jpg");
+	  Picture swan = new Picture("images/swan.jpg");
+	  this.copy(blueMotorcycle, 0, 0);
+	  this.copy(redMotorcycle, 100, 0);
+	  this.copy(swan, 200, 0);
+	  this.mirrorVertical();
+	  this.write("images/collage.jpg");
+  }
+  
   
   /** Method to show large changes in color 
     * @param edgeDist the distance for finding edges
@@ -375,9 +400,12 @@ public class Picture extends SimplePicture
   {
     Pixel leftPixel = null;
     Pixel rightPixel = null;
+    Pixel topPixel = null;
+    Pixel bottomPixel = null;
     Pixel[][] pixels = this.getPixels2D();
     Color rightColor = null;
-    for (int row = 0; row < pixels.length; row++)
+    Color topColor = null;
+    for (int row = 0; row < pixels.length-1; row++)
     {
       for (int col = 0; 
            col < pixels[0].length-1; col++)
@@ -390,6 +418,14 @@ public class Picture extends SimplePicture
           leftPixel.setColor(Color.BLACK);
         else
           leftPixel.setColor(Color.WHITE);
+        
+        bottomPixel = pixels[row][col];
+        topPixel = pixels[row+1][col];
+        topColor = bottomPixel.getColor();
+        if(bottomPixel.colorDistance(topColor) > edgeDist)
+        	bottomPixel.setColor(Color.BLACK);
+        else
+        	bottomPixel.setColor(Color.WHITE);
       }
     }
   }

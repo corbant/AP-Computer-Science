@@ -100,6 +100,21 @@ public class PictureTester
     canvas.explore();
   }
   
+  /** Method to test myCollage method */
+  public static void testMyCollage() {
+	  Picture canvas = new Picture("images/640x480.jpg");
+	  canvas.myCollage();
+	  canvas.explore();
+  }
+  
+  /** Method to test the copy method */
+  public static void testCopy() {
+	  Picture motorcycle = new Picture("images/blueMotorcycle.jpg");
+	  Picture moon = new Picture("images/moon-surface.jpg");
+	  motorcycle.copy(moon, 20, 200, 70, 320, 30, 50);
+	  motorcycle.explore();
+  }
+  
   /** Method to test edgeDetection */
   public static void testEdgeDetection()
   {
@@ -129,9 +144,10 @@ public class PictureTester
     //testMirrorArms();
     //testMirrorGull();
     //testMirrorDiagonal();
-    testCollage();
+    //testCollage();
+	//testMyCollage();
     //testCopy();
-    //testEdgeDetection();
+    testEdgeDetection();
     //testEdgeDetection2();
     //testChromakey();
     //testEncodeAndDecode();
